@@ -3,7 +3,7 @@ import { User } from '../../users/models/user.model';
 import { BaseModel } from '../../common/models/base.model';
 
 @ObjectType()
-export class Post extends BaseModel {
+export class Proof extends BaseModel {
   @Field()
   title: string;
 
@@ -14,5 +14,5 @@ export class Post extends BaseModel {
   published: boolean;
 
   @Field(() => User, { nullable: true })
-  author?: User | null;
+  user?: User | null;
 }

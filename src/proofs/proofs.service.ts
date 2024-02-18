@@ -8,4 +8,8 @@ export class ProofService {
   generateProof() {
     return 'proof';
   }
+
+  formatQuery(query: string) {
+    return query;
+  }
 }

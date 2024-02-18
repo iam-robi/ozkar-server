@@ -1,0 +1,3 @@
+query ProveQuery($proofRequests: CreateProofInput!) {
+  proveQuery(proofRequests: $proofRequests)
+}
