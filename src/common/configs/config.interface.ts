@@ -4,6 +4,7 @@ export interface Config {
   swagger: SwaggerConfig;
   graphql: GraphqlConfig;
   security: SecurityConfig;
+  temporal: TemporalConfig;
 }
 
 export interface NestConfig {
@@ -33,4 +34,8 @@ export interface SecurityConfig {
   expiresIn: string;
   refreshIn: string;
   bcryptSaltOrRound: string | number;
+}
+
+export interface TemporalConfig {
+  address: string;
 }

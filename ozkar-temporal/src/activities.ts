@@ -60,7 +60,7 @@ export async function computeProof(proofRequest: ProofRequest): Promise<ProofReq
   return proofRequest;
 }
 
-export async function computeFhirProof(proofRequest: ProofRequest): Promise<ExecutionProof> {
+export async function computeFhirProof(proofRequest: ProofRequest): Promise<any> {
   //console.log(IPLD.LinearModel.fromJS(proofRequest));
   const map = MerkleMapFactory.fromLinearModel(IPLD.LinearModel.fromJS(proofRequest.resource));
   // // Incoming public stuff

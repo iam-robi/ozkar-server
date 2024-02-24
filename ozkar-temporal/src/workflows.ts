@@ -14,6 +14,6 @@ export async function prove(proofRequest: ProofRequest): Promise<ProofRequest> {
   return await computeProof(proofRequest);
 }
 
-export async function proveFhir(proofRequest: ProofRequest): Promise<ExecutionProof> {
+export async function proveFhir(proofRequest: ProofRequest): Promise<any> {
   return await computeFhirProof(proofRequest);
 }

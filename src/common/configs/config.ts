@@ -25,6 +25,9 @@ const config: Config = {
     refreshIn: '7d',
     bcryptSaltOrRound: 10,
   },
+  temporal: {
+    address: process.env.TEMPORAL_ADDRESS || 'localhost:7233',
+  },
 };
 
 export default (): Config => config;

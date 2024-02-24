@@ -18,7 +18,7 @@ async function run() {
   // Step 2: Register Workflows and Activities with the Worker.
   const worker = await Worker.create({
     connection,
-    namespace: 'ozkar-dev',
+    namespace: 'default',
     taskQueue: TASK_QUEUE_NAME,
     // Workflows are registered using a path as they run in a separate JS context.
     workflowsPath: require.resolve('./workflows'),
