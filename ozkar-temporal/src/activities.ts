@@ -1,5 +1,5 @@
 import { Resource as FhirResource } from '@medplum/fhirtypes';
-import { MerkleMapFactory, Verification, Backend, Query as ZkQuery, IPLD } from 'ozkar-zerkle';
+import { MerkleMapFactory, Verification, Backend, Query as ZkQuery, IPLD } from '@ozkarjs/zerkle';
 // Add Activity Definitions here.
 
 export type RawQueryObject = {

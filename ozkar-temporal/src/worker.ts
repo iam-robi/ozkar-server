@@ -1,6 +1,5 @@
 import { NativeConnection, Worker } from '@temporalio/worker';
-console.log('Current directory:', process.cwd());
-console.log('Current file path:', __filename);
+
 import * as activities from './activities';
 import { TASK_QUEUE_NAME } from './shared';
 

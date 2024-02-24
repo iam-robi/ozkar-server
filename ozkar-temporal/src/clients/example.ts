@@ -8,10 +8,10 @@ export const exampleProofRequest: ProofRequest = {
     '/status': {
       $eq: 'final',
     },
-    '/code/coding/0/system': {
+    "/code/coding/'0/system": {
       $eq: 'http://loinc.org',
     },
-    '/code/coding/0/code': {
+    "/code/coding/'0/code": {
       $eq: '29463-7',
     },
     '/valueQuantity/unit': {
