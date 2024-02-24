@@ -4,10 +4,10 @@ import { proxyActivities } from '@temporalio/workflow';
 import type * as activities from './activities';
 
 const { computeProof, computeFhirProof } = proxyActivities<typeof activities>({
-  startToCloseTimeout: '5 minutes',
+  startToCloseTimeout: '45 minutes',
 });
 import { type ProofRequest } from './activities';
-import { ExecutionProof } from 'ozkar-zerkle/build/esm/lib/mina-backend';
+// import { ExecutionProof } from 'ozkar-zerkle/build/esm/lib/mina-backend';
 /** A workflow that simply calls an activity */
 
 export async function prove(proofRequest: ProofRequest): Promise<ProofRequest> {
