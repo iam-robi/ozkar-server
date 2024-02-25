@@ -14,7 +14,7 @@ export class ProofService {
 
     const client = new WorkflowClient({
       connection,
-      namespace: 'ozkar-dev',
+      namespace: this.config.get<string>('temporal.namespace'),
     });
 
     const handle = await client.start('fhirProof', {
