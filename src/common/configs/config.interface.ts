@@ -38,4 +38,5 @@ export interface SecurityConfig {
 
 export interface TemporalConfig {
   address: string;
+  namespace: string;
 }

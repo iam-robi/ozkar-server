@@ -5,7 +5,7 @@ import {
   Backend,
   Query as ZkQuery,
   IPLD,
-} from './lib/src/index.js';
+} from '@ozkarjs/zerkle';
 @Resolver()
 export class AppResolver {
   @Query(() => String)

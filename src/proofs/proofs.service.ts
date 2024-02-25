@@ -14,7 +14,7 @@ export class ProofService {
 
     const client = new WorkflowClient({
       connection,
-      namespace: 'default',
+      namespace: 'ozkar-dev',
     });
 
     const handle = await client.start('fhirProof', {
@@ -22,8 +22,6 @@ export class ProofService {
       taskQueue: 'fhir:dev',
       workflowId: 'fhir-' + crypto.randomUUID(),
     });
-
-    console.log('handle', handle);
 
     return handle.workflowId;
   }

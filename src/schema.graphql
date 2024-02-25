@@ -128,8 +128,8 @@ type Query {
   helloWorld: String!
   me: User!
   post: Post!
-  proveQuery(proofRequests: CreateProofInput!): JSON!
   publishedPosts(orderBy: PostOrder, query: String): PostConnection!
+  requestProofs(proofRequests: CreateProofInput!): JSON!
   userPosts: [Post!]!
 }
 

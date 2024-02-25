@@ -9,13 +9,7 @@ import {
   Mutation,
 } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
-import {
-  MerkleMapFactory,
-  Verification,
-  Backend,
-  Query as ZkQuery,
-  IPLD,
-} from '../lib/src/index.js';
+
 import { UseGuards } from '@nestjs/common';
 
 import { Proof } from './models/proof.model.js';
@@ -40,13 +34,15 @@ export class ProofsResolver {
 
   // @UseGuards(GqlAuthGuard)
   @Query(() => GraphQLJSON)
-  async proveQuery(
+  async requestProofs(
     @Args('proofRequests') proofRequests: CreateProofInput,
   ): Promise<Array<string>> {
     const workflowIds = [];
-    proofRequests.proofRequests.map((proofRequests) => {
-      workflowIds.push(this.proofService.generateProof(proofRequests[0]));
-    });
+
+    for (const proofRequest of proofRequests.proofRequests) {
+      const workflowId = await this.proofService.generateProof(proofRequest);
+      workflowIds.push(workflowId);
+    }
 
     return workflowIds;
   }

@@ -1218,6 +1218,13 @@
   dependencies:
     tslib "^2.3.1"
 
+"@ozkarjs/zerkle@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@ozkarjs/zerkle/-/zerkle-1.0.0.tgz"
+  integrity sha512-J7VH8drFkRfeVKD+OqskfZbZ7BxF3U02FUju2BnLhtOaFelpNjcDIRnryRtcV6oNojN/3TPM9T+IOO9L9G8J2g==
+  dependencies:
+    o1js "^0.15.1"
+
 "@prisma/client@^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0", "@prisma/client@^5.0.0":
   version "5.0.0"
   resolved "https://registry.npmjs.org/@prisma/client/-/client-5.0.0.tgz"
@@ -5507,6 +5514,19 @@ npmlog@^5.0.1:
     console-control-strings "^1.1.0"
     gauge "^3.0.0"
     set-blocking "^2.0.0"
+
+o1js@^0.15.1:
+  version "0.15.4"
+  resolved "https://registry.npmjs.org/o1js/-/o1js-0.15.4.tgz"
+  integrity sha512-70/9NI+Nq4WCFnhYOj2RUynOOqdH0I4wCGxOlmem7GLL2qgj3r/w6DiMV8ZQVjG/MSEyjXxcmEwQpa5R2ef34A==
+  dependencies:
+    blakejs "1.2.1"
+    cachedir "^2.4.0"
+    detect-gpu "^5.0.5"
+    isomorphic-fetch "^3.0.0"
+    js-sha256 "^0.9.0"
+    reflect-metadata "^0.1.13"
+    tslib "^2.3.0"
 
 o1js@^0.16.1:
   version "0.16.1"
