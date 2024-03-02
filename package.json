@@ -73,6 +73,7 @@
     "graphql-scalars": "1.22.2",
     "graphql-subscriptions": "2.0.0",
     "graphql-type-json": "^0.3.2",
+    "mina-signer": "^3.0.4",
     "nestjs-prisma": "0.22.0-dev.0",
     "o1js": "^0.16.1",
     "passport": "0.6.0",
