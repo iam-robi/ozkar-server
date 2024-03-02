@@ -2498,7 +2498,7 @@ bl@^4.0.3, bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-blakejs@1.2.1:
+blakejs@^1.2.1, blakejs@1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/blakejs/-/blakejs-1.2.1.tgz"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
@@ -5251,6 +5251,14 @@ min-indent@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
+
+mina-signer@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/mina-signer/-/mina-signer-3.0.4.tgz"
+  integrity sha512-5lPSxNDBro/qFfrEwc/yiYzSQ1Eq9ccSFlF/XJhPc0hnQQ48FFUU0iwQ0k2NNSW+XEZgMMVVEWOSb7eRROQBsA==
+  dependencies:
+    blakejs "^1.2.1"
+    js-sha256 "^0.9.0"
 
 minimatch@^3.0.4, minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"

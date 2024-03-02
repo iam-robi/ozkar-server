@@ -2,17 +2,17 @@
   "proofRequestsObject": {
       "proofRequests":[
     {
-        "queryObject": {
+        "query": {
             "/resourceType": {
                 "$eq": "Observation"
             },
             "/status": {
                 "$eq": "final"
             },
-            "/code/coding/0/system": {
+            "/code/coding/'0/system": {
                 "$eq": "http://loinc.org"
             },
-            "/code/coding/0/code": {
+            "/code/coding/'0/code": {
                 "$eq": "29463-7"
             },
             "/valueQuantity/unit": {
@@ -24,7 +24,7 @@
         },
         "resource": {
             "resourceType": "Observation",
-            "id": "weight",
+            "id": "fb2fe821-7406-4566-8e19-a05099840eb3",
             "meta": {
                 "profile": [
                     "http://hl7.org/fhir/us/vitals/StructureDefinition/body-weight"
@@ -98,29 +98,29 @@
         }
     },
     {
-        "queryObject": {
+        "query": {
             "/resourceType": {
                 "$eq": "Observation"
             },
             "/status": {
                 "$eq": "final"
             },
-            "/code/coding/0/system": {
+            "/code/coding/'0/system": {
                 "$eq": "http://loinc.org"
             },
-            "/code/coding/0/code": {
+            "/code/coding/'0/code": {
                 "$eq": "8302-2"
             },
             "/valueQuantity/unit": {
                 "$eq": "cm"
             },
             "/valueQuantity/value": {
-                "$eq": "176"
+                "$gt": "170"
             }
         },
         "resource": {
             "resourceType": "Observation",
-            "id": "height",
+            "id": "d01fd0ef-9f80-440b-accb-23b536151a0b",
             "meta": {
                 "profile": [
                     "http://hl7.org/fhir/StructureDefinition/vitalsigns"
@@ -165,16 +165,17 @@
             }
         }
     }
-        ]
+]
   },
   "signedDataObject": {
     "signedData": {
-        "signature": {
-            "field": "6247539832928994654721254190298325894190900862204428627933838336371752719590",
-            "scalar": "11218854311334770507252416360653013799434932384733075354204227713191035752495"
-        },
-        "publicKey": "B62qjVknV9E5dpStdbdoUmendDu79Gd5ovm9YNHLd6aPsdwh2sYeiEz",
-        "data": "c45f1c431262d5207fd161ff1ce6c49a880b953d4e058aafe0491cfd05d45e77"
-    }
+    "signature": {
+        "field": "24938686128871148037097445361987807623802160437409973215105282669343328922290",
+        "scalar": "21440133364261939750487410614093132705305997846318830272209383931786303273826"
+    },
+    "publicKey": "B62qjVknV9E5dpStdbdoUmendDu79Gd5ovm9YNHLd6aPsdwh2sYeiEz",
+    "data": "b9e213026db5dc48973282f0019bb2a2f7043de96684141168e5ce88687bdd43"
+}
   }
 }
+
