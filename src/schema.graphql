@@ -50,7 +50,7 @@ type Mutation {
   createPost(data: CreatePostInput!): Post!
   login(data: LoginInput!): Auth!
   refreshToken(token: JWT!): Token!
-  requestProofs(proofRequests: CreateProofInput!, signature: SignatureInput): JSON!
+  requestProofs(proofRequests: CreateProofInput!, signedData: SignatureInput): JSON!
   signup(data: SignupInput!): Auth!
   updateUser(data: UpdateUserInput!): User!
 }

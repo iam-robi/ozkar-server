@@ -36,7 +36,7 @@ export class ProofsResolver {
   @Mutation(() => GraphQLJSON)
   async requestProofs(
     @Args('proofRequests') proofRequests: CreateProofInput,
-    @Args('signature', { nullable: true }) signedData: SignatureInput,
+    @Args('signedData', { nullable: true }) signedData: SignatureInput,
   ): Promise<Array<string>> {
     const workflowIds = [];
 
@@ -60,12 +60,16 @@ export class ProofsResolver {
       signature: signedData.signedData.signature,
     };
 
-    const signerClient = new Client({ network: 'testnet' });
+    const signerClient = new Client({ network: 'mainnet' });
     const verifyResult = signerClient.verifyMessage(verifyBody);
     if (!verifyResult) {
       throw new NotAcceptableException({
         message: 'Signature verification failed',
       });
+    }
+    for (const proofRequest of proofRequests.proofRequests) {
+      const workflowId = await this.proofService.generateProof(proofRequest);
+      workflowIds.push(workflowId);
     }
 
     return workflowIds;
