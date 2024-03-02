@@ -12,12 +12,10 @@ import { ProofService } from './proofs.service.js';
 import { WorflowsStatusInput } from './dto/workflowStatus.input.js';
 const pubSub = new PubSub();
 
-import { SignatureInput } from '../common/dto/signature.input.js';
+import { SignatureInput } from '../common/dto/signature.input';
 import 'crypto';
-import { Signature } from 'o1js';
 
 import { Client } from 'mina-signer';
-import { sign } from 'crypto';
 
 @Resolver(() => Proof)
 export class ProofsResolver {
