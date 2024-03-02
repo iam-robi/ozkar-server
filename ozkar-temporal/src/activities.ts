@@ -17,9 +17,6 @@ export type ProofRequest = {
   resource: FhirResource;
 };
 
-import { Field, Proof } from 'o1js';
-import { ExecutionProof } from 'ozkar-zerkle/build/esm/lib/mina-backend';
-
 export async function computeProof(proofRequest: ProofRequest): Promise<ProofRequest> {
   //console.log(IPLD.LinearModel.fromJS(proofRequest));
   const map = MerkleMapFactory.fromLinearModel(
