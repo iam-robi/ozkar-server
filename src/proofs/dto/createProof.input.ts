@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 import { InputType, Field } from '@nestjs/graphql';
 import { Resource as FhirResource } from '@medplum/fhirtypes';
 import GraphQLJSON from 'graphql-type-json';
-
+import type { Signature } from 'o1js';
 export type RawQueryObject = {
   [key: string]: ComparisonObject;
 };

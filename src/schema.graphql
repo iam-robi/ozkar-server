@@ -50,6 +50,7 @@ type Mutation {
   createPost(data: CreatePostInput!): Post!
   login(data: LoginInput!): Auth!
   refreshToken(token: JWT!): Token!
+  requestProofs(proofRequests: CreateProofInput!, signature: SignatureInput): JSON!
   signup(data: SignupInput!): Auth!
   updateUser(data: UpdateUserInput!): User!
 }
@@ -130,7 +131,6 @@ type Query {
   me: User!
   post: Post!
   publishedPosts(orderBy: PostOrder, query: String): PostConnection!
-  requestProofs(proofRequests: CreateProofInput!): JSON!
   userPosts: [Post!]!
 }
 
@@ -138,6 +138,10 @@ type Query {
 enum Role {
   ADMIN
   USER
+}
+
+input SignatureInput {
+  signedData: JSON
 }
 
 input SignupInput {

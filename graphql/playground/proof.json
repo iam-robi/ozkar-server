@@ -1,5 +1,5 @@
 {
-  "proofRequests": {
+  "proofRequestsObject": {
       "proofRequests":[
     {
         "queryObject": {
@@ -165,6 +165,16 @@
             }
         }
     }
-]
+        ]
+  },
+  "signedDataObject": {
+    "signedData": {
+        "signature": {
+            "field": "6247539832928994654721254190298325894190900862204428627933838336371752719590",
+            "scalar": "11218854311334770507252416360653013799434932384733075354204227713191035752495"
+        },
+        "publicKey": "B62qjVknV9E5dpStdbdoUmendDu79Gd5ovm9YNHLd6aPsdwh2sYeiEz",
+        "data": "c45f1c431262d5207fd161ff1ce6c49a880b953d4e058aafe0491cfd05d45e77"
+    }
   }
 }
