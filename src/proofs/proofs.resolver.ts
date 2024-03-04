@@ -16,7 +16,7 @@ import { SignatureInput } from '../common/dto/signature.input';
 import 'crypto';
 
 import { Client } from 'mina-signer';
-
+import { PublicKey } from 'o1js';
 @Resolver(() => Proof)
 export class ProofsResolver {
   constructor(
@@ -50,11 +50,11 @@ export class ProofsResolver {
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('');
 
-    const publicKey = signedData.signedData.publicKey;
+    const publicKey = PublicKey.fromBase58(signedData.signedData.publicKey);
 
     const verifyBody = {
       data: hashHex,
-      publicKey: publicKey,
+      publicKey: publicKey.toBase58().toString(),
       signature: signedData.signedData.signature,
     };
 
@@ -66,7 +66,10 @@ export class ProofsResolver {
       });
     }
     for (const proofRequest of proofRequests.proofRequests) {
-      const workflowId = await this.proofService.generateProof(proofRequest);
+      const workflowId = await this.proofService.generateProof(
+        proofRequest,
+        publicKey,
+      );
       workflowIds.push(workflowId);
     }
 

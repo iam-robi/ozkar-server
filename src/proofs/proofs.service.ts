@@ -6,12 +6,13 @@ import {
   type WorkflowExecutionDescription,
 } from '@temporalio/client';
 import { ConfigService } from '@nestjs/config';
+import { PublicKey } from 'o1js';
 
 @Injectable()
 export class ProofService {
   constructor(private prisma: PrismaService, private config: ConfigService) {}
 
-  async generateProof(proofRequest: any) {
+  async generateProof(proofRequest: any, publicKey: PublicKey) {
     const connection = await Connection.connect({
       address: this.config.get<string>('temporal.address'),
     });
@@ -24,7 +25,8 @@ export class ProofService {
     const handle = await client.start('proveFhir', {
       args: [proofRequest],
       taskQueue: 'compute-proof-request',
-      workflowId: 'fhir-' + crypto.randomUUID(),
+      workflowId:
+        'fhir-' + publicKey.toBase58().toString() + '-' + crypto.randomUUID(),
     });
 
     return handle.workflowId;
