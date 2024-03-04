@@ -8,7 +8,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
       - name: Extract version from package.json and set as environment variable
         run: |
           version=$(jq -r '.version' ./package.json)
