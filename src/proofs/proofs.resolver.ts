@@ -17,6 +17,7 @@ import 'crypto';
 
 import { Client } from 'mina-signer';
 import { PublicKey } from 'o1js';
+import { hash } from 'bcrypt';
 @Resolver(() => Proof)
 export class ProofsResolver {
   constructor(
@@ -69,6 +70,7 @@ export class ProofsResolver {
       const workflowId = await this.proofService.generateProof(
         proofRequest,
         publicKey,
+        hashHex,
       );
       workflowIds.push(workflowId);
     }

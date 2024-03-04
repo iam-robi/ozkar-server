@@ -12,7 +12,11 @@ import { PublicKey } from 'o1js';
 export class ProofService {
   constructor(private prisma: PrismaService, private config: ConfigService) {}
 
-  async generateProof(proofRequest: any, publicKey: PublicKey) {
+  async generateProof(
+    proofRequest: any,
+    publicKey: PublicKey,
+    requestHash: string,
+  ) {
     const connection = await Connection.connect({
       address: this.config.get<string>('temporal.address'),
     });
@@ -26,7 +30,12 @@ export class ProofService {
       args: [proofRequest],
       taskQueue: 'compute-proof-request',
       workflowId:
-        'fhir-' + publicKey.toBase58().toString() + '-' + crypto.randomUUID(),
+        'fhir_' +
+        publicKey.toBase58().toString() +
+        '_' +
+        requestHash +
+        '_' +
+        crypto.randomUUID(),
     });
 
     return handle.workflowId;
