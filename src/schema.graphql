@@ -125,6 +125,7 @@ type Proof {
 }
 
 type Query {
+  getUserWorkflows(publicKey: String!, resourceId: String, status: String!): JSON!
   getWorflowStatus(workflowIds: WorflowsStatusInput!): JSON!
   hello(name: String!): String!
   helloWorld: String!

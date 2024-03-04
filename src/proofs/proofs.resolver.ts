@@ -70,7 +70,7 @@ export class ProofsResolver {
       const workflowId = await this.proofService.generateProof(
         proofRequest,
         publicKey,
-        hashHex,
+        proofRequest.resource.id,
       );
       workflowIds.push(workflowId);
     }
@@ -87,5 +87,21 @@ export class ProofsResolver {
     );
 
     return workflowDescriptions;
+  }
+
+  @Query(() => GraphQLJSON)
+  async getUserWorkflows(
+    @Args('publicKey') publicKey: string,
+    @Args('status') status: string, // Make status mandatory
+    @Args('resourceId', { nullable: true }) resourceId?: string,
+  ): Promise<any> {
+    // Now, pass both status and optionally resourceId to the service function
+    const workflows = await this.proofService.getWorkflowsByPublicKey(
+      publicKey,
+      status,
+      resourceId,
+    );
+
+    return workflows;
   }
 }

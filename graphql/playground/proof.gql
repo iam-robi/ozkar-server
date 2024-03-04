@@ -1,3 +1,11 @@
 query ProveQuery($proofRequests: CreateProofInput!) {
   proveQuery(proofRequests: $proofRequests)
 }
+
+query GetUserWorkflows {
+  getUserWorkflows(
+    publicKey: "yourPublicKeyHere"
+    status: "Running"
+    resourceId: "resourceID"
+  )
+}

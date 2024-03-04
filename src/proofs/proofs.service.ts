@@ -15,7 +15,7 @@ export class ProofService {
   async generateProof(
     proofRequest: any,
     publicKey: PublicKey,
-    requestHash: string,
+    resourceId: string,
   ) {
     const connection = await Connection.connect({
       address: this.config.get<string>('temporal.address'),
@@ -31,11 +31,19 @@ export class ProofService {
       taskQueue: 'compute-proof-request',
       workflowId:
         'fhir_' +
-        publicKey.toBase58().toString() +
-        '_' +
-        requestHash +
-        '_' +
+        // publicKey.toBase58().toString() +
+        // '_' +
+        // resourceId +
+        // '_' +
         crypto.randomUUID(),
+      searchAttributes: {
+        ResourceId: [resourceId],
+        PublicKey: [publicKey.toBase58().toString()],
+        // customSearchAttributes: {
+        //   ResourceId: resourceId,
+        //   publicKey: publicKey.toBase58().toString(),
+        // },
+      },
     });
 
     return handle.workflowId;
@@ -62,6 +70,35 @@ export class ProofService {
     }
 
     return workflowDescriptions;
+  }
+
+  async getWorkflowsByPublicKey(
+    publicKey: string,
+    status: string,
+    resourceId?: string,
+  ) {
+    const connection = await Connection.connect({
+      address: this.config.get<string>('temporal.address'),
+    });
+    const client = new WorkflowClient({
+      connection,
+      namespace: this.config.get<string>('temporal.namespace'),
+    });
+
+    // Construct the query with mandatory publicKey and status
+    let query = `PublicKey = "${publicKey}" AND ExecutionStatus = "${status}"`;
+
+    // Append resourceId to the query if it's provided
+    if (resourceId !== null && resourceId !== undefined) {
+      query += ` AND ResourceId = "${resourceId}"`;
+    }
+
+    const response = await connection.workflowService.listWorkflowExecutions({
+      namespace: this.config.get<string>('temporal.namespace'), // Ensure namespace is passed here if required
+      query: query,
+    });
+
+    return response; // Make sure to return the response
   }
 
   formatQuery(query: string) {
