@@ -1,4 +1,4 @@
-name: Test linux job
+name: Build Dockerfile 
 
 on: push
 
@@ -9,18 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Extract package.json content
-        id: set_var
+      - name: Extract version from package.json and set as environment variable
         run: |
-          content=`cat ./package.json` # Adjust the path to your actual package.json file
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
+          version=$(jq -r '.version' ./package.json)
+          echo "version=$version" >> $GITHUB_ENV
 
       - name: Log extracted version
-        run: |
-          echo "Extracted version: ${{ fromJson(steps.set_var.outputs.packageJson).version }}"
+        run: echo "Extracted version: ${{ env.version }}"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
@@ -34,4 +29,4 @@ jobs:
           context: .
           file: ./Dockerfile.alpine
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ozkar-server:${{ fromJson(steps.set_var.outputs.packageJson).version }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/ozkar-server:${{ env.version }}
