@@ -119,7 +119,7 @@ export class ProofService {
 
     const result = await handle.result();
     console.log(result);
-
+    //TODO: add typing
     return result;
   }
 
