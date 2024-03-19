@@ -74,8 +74,8 @@ export class ProofService {
 
   async getWorkflowsByPublicKey(
     publicKey: string,
-    status: string,
-    resourceId?: string,
+    status = '',
+    resourceId = '',
   ) {
     const connection = await Connection.connect({
       address: this.config.get<string>('temporal.address'),
@@ -86,10 +86,14 @@ export class ProofService {
     });
 
     // Construct the query with mandatory publicKey and status
-    let query = `PublicKey = "${publicKey}" AND ExecutionStatus = "${status}"`;
+    let query = `PublicKey = "${publicKey}"`;
+
+    if (status !== null && status !== undefined && status !== '') {
+      query += ` AND ExecutionStatus = "${status}"`;
+    }
 
     // Append resourceId to the query if it's provided
-    if (resourceId !== null && resourceId !== undefined) {
+    if (resourceId !== null && resourceId !== undefined && resourceId !== '') {
       query += ` AND ResourceId = "${resourceId}"`;
     }
 
@@ -99,6 +103,24 @@ export class ProofService {
     });
 
     return response; // Make sure to return the response
+  }
+
+  async getResultProof(workflowId: string) {
+    const connection = await Connection.connect({
+      address: this.config.get<string>('temporal.address'),
+    });
+
+    const client = new WorkflowClient({
+      connection,
+      namespace: this.config.get<string>('temporal.namespace'),
+    });
+
+    const handle = client.getHandle(workflowId);
+
+    const result = await handle.result();
+    console.log(result);
+
+    return result;
   }
 
   formatQuery(query: string) {

@@ -18,6 +18,7 @@ import 'crypto';
 import { Client } from 'mina-signer';
 import { PublicKey } from 'o1js';
 import { hash } from 'bcrypt';
+import { sign } from 'crypto';
 @Resolver(() => Proof)
 export class ProofsResolver {
   constructor(
@@ -103,5 +104,24 @@ export class ProofsResolver {
     );
 
     return workflows;
+  }
+
+  @Query(() => GraphQLJSON)
+  async getProofResult(
+    @Args('signature') signature: string,
+    @Args('workflowId') workflowId: string, // Make status mandatory
+  ): Promise<any> {
+    try {
+      const resultProof = await this.proofService.getResultProof(workflowId);
+      if (!resultProof) {
+        // Handle the case where no result is found; decide if you want to throw an error or return a default value
+        throw new Error('No result found for the provided workflowId.');
+      }
+      return resultProof;
+    } catch (error) {
+      // Log the error or handle it as needed
+      console.error(error);
+      throw new Error('Error retrieving proof result.');
+    }
   }
 }
