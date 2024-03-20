@@ -2,19 +2,18 @@ query ProveQuery($proofRequests: CreateProofInput!) {
   proveQuery(proofRequests: $proofRequests)
 }
 
-# Write your query or mutation here
-query GetUserWorkflows($publicKey: String!,$status: String!, $resourceId: String!) {
+
+query GetUserWorkflows($publicKey: String!,$status: String!, $resourceIds: [String]!) {
   getUserWorkflows(
     publicKey: $publicKey
     status: $status
-    resourceId: $resourceId
+    resourceIds: $resourceIds
     #
   )
 }
-
-query GetProofResult($workflowId: String!) {
-  getProofResult(
+query GetProofsResults($workflowIds: [String]!) {
+  getProofsResults(
     signature: ""
-    workflowId: $workflowId
+    workflowIds: $workflowIds
   )
 }

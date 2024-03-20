@@ -94,34 +94,47 @@ export class ProofsResolver {
   async getUserWorkflows(
     @Args('publicKey') publicKey: string,
     @Args('status') status: string, // Make status mandatory
-    @Args('resourceId', { nullable: true }) resourceId?: string,
+
+    @Args('resourceIds', { type: () => [String], nullable: 'itemsAndList' })
+    resourceIds: string[],
   ): Promise<any> {
     // Now, pass both status and optionally resourceId to the service function
-    const workflows = await this.proofService.getWorkflowsByPublicKey(
-      publicKey,
-      status,
-      resourceId,
-    );
+    const selectedWorkflows = [];
 
-    return workflows;
+    for (const resourceId of resourceIds) {
+      const workflows = await this.proofService.getWorkflowsByPublicKey(
+        publicKey,
+        status,
+        resourceId,
+      );
+      selectedWorkflows.push(workflows);
+    }
+
+    return selectedWorkflows;
   }
 
   @Query(() => GraphQLJSON)
-  async getProofResult(
+  async getProofsResults(
     @Args('signature') signature: string,
-    @Args('workflowId') workflowId: string, // Make status mandatory
+    @Args('workflowIds', { type: () => [String], nullable: 'itemsAndList' })
+    workflowIds: string[], // Make status mandatory
   ): Promise<any> {
-    try {
-      const resultProof = await this.proofService.getResultProof(workflowId);
-      if (!resultProof) {
-        // Handle the case where no result is found; decide if you want to throw an error or return a default value
-        throw new Error('No result found for the provided workflowId.');
+    const proofs = [];
+
+    for (const workflowId of workflowIds) {
+      try {
+        const resultProof = await this.proofService.getResultProof(workflowId);
+        if (!resultProof) {
+          // Handle the case where no result is found; decide if you want to throw an error or return a default value
+          throw new Error('No result found for the provided workflowId.');
+        }
+        proofs.push(resultProof);
+      } catch (error) {
+        // Log the error or handle it as needed
+        console.error(error);
+        throw new Error('Error retrieving proof result.');
       }
-      return resultProof;
-    } catch (error) {
-      // Log the error or handle it as needed
-      console.error(error);
-      throw new Error('Error retrieving proof result.');
     }
+    return proofs;
   }
 }
