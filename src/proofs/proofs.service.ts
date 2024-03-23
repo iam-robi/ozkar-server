@@ -117,8 +117,48 @@ export class ProofService {
 
     const handle = client.getHandle(workflowId);
 
+    const describeResp = await handle.describe();
+    const clearAttributes = {};
+    //console.log(describeResp.raw.workflowExecutionInfo);
+    if (
+      describeResp.raw.workflowExecutionInfo?.searchAttributes?.indexedFields
+    ) {
+      const indexedFields =
+        describeResp.raw.workflowExecutionInfo.searchAttributes.indexedFields;
+
+      for (const key in indexedFields) {
+        const payload = indexedFields[key];
+        // Ensure we're dealing with the expected structure
+        if (payload.metadata && payload.data) {
+          try {
+            // Convert the Buffer to a string; assuming the encoding is 'json/plain' or similar and content is JSON
+            const dataStr = payload.data.toString('utf8'); // Convert Buffer to string
+            clearAttributes[key] = JSON.parse(dataStr);
+          } catch (error) {
+            console.error(
+              'Error parsing search attribute for key:',
+              key,
+              '; Error:',
+              error,
+            );
+            // If parsing fails, default to converting the Buffer to a string without parsing
+            clearAttributes[key] = payload.data.toString();
+          }
+        } else {
+          console.warn('Unexpected structure for search attribute:', key);
+          clearAttributes[key] = payload;
+        }
+      }
+    }
+
     const result = await handle.result();
-    console.log(result);
+
+    return {
+      publicKey: clearAttributes['PublicKey'][0],
+      resourceId: clearAttributes['ResourceId'][0],
+      proofObject: result,
+    };
+
     //TODO: add typing
     return result;
   }
