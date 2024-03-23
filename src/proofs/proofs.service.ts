@@ -4,6 +4,7 @@ import {
   WorkflowClient,
   Connection,
   type WorkflowExecutionDescription,
+  WorkflowExecutionStatusName,
 } from '@temporalio/client';
 import { ConfigService } from '@nestjs/config';
 import { PublicKey } from 'o1js';
@@ -102,7 +103,64 @@ export class ProofService {
       query: query,
     });
 
-    return response; // Make sure to return the response
+    const results = [];
+    for (const executionInfo of response.executions) {
+      const workflowId = executionInfo.execution.workflowId;
+      const runId = executionInfo.execution.runId;
+
+      // Check if the execution status indicates that the workflow has completed
+      // see WorkflowExecutionStatusName for status mapping. 2 == completed
+      // if (executionInfo.status === 2) {
+      //   // Adjust status check as needed
+      //   const client = new WorkflowClient({
+      //     connection: connection, // or however you instantiate your connection
+      //     namespace: this.config.get<string>('temporal.namespace'),
+      //   });
+
+      //   const handle = client.getHandle(workflowId, runId);
+      //   try {
+      //     const result = await handle.result();
+      //     results.push({
+      //       workflowId: workflowId,
+      //       runId: runId,
+      //       result: result,
+      //     });
+      //   } catch (error) {
+      //     console.error('Failed to fetch result for', workflowId, runId, error);
+      //   }
+      // }
+
+      if (executionInfo.status === 2) {
+        // Completed workflows
+        const handle = client.getHandle(workflowId, runId);
+        try {
+          const result = await handle.result();
+          results.push({
+            workflowId: workflowId,
+            runId: runId,
+            status: 'COMPLETED',
+            executionInfo: executionInfo,
+            result: result,
+          });
+        } catch (error) {
+          console.error('Failed to fetch result for', workflowId, runId, error);
+        }
+      } else if (executionInfo.status === 1) {
+        // Running workflows
+        // Include running workflows without result
+        results.push({
+          workflowId: workflowId,
+          runId: runId,
+          status: 'RUNNING',
+          executionInfo: executionInfo,
+          result: null, // Indicate no result for running workflows
+        });
+      }
+    }
+
+    console.log('Results:', results);
+
+    return results; // Make sure to return the response
   }
 
   async getResultProof(workflowId: string) {

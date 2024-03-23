@@ -94,7 +94,6 @@ export class ProofsResolver {
   async getUserWorkflows(
     @Args('publicKey') publicKey: string,
     @Args('status') status: string, // Make status mandatory
-
     @Args('resourceIds', { type: () => [String], nullable: 'itemsAndList' })
     resourceIds: string[],
   ): Promise<any> {
@@ -107,8 +106,29 @@ export class ProofsResolver {
         status,
         resourceId,
       );
-      selectedWorkflows.push(workflows);
+
+      const workflowData = { resourceId, publicKey, workflows };
+      selectedWorkflows.push(workflowData);
     }
+
+    // const workflowIds: string[] = [];
+    // selectedWorkflows.provingWorkflowStatus.forEach((workflow) => {
+    //   //@ts-ignore
+    //   console.log(workflow.executions[0].status);
+    //   //@ts-ignore
+    //   if (
+    //     //@ts-ignore
+    //     workflow.executions[0].status === 'WORKFLOW_EXECUTION_STATUS_COMPLETED'
+    //   ) {
+    //     //@ts-ignore
+    //     workflowIds.push(
+    //       //@ts-ignore
+    //       workflow.executions[0].execution.workflowId as string,
+    //     );
+    //   }
+    // });
+
+    const completedWorkflowsIds = selectedWorkflows.map((workflow) => {});
 
     return selectedWorkflows;
   }
