@@ -73,6 +73,16 @@ export class ProofsResolver {
         publicKey,
         proofRequest.resource.id,
       );
+      const newProofMetadata = this.prisma.proof.create({
+        data: {
+          workflowId: workflowId as string,
+          queryComparator: proofRequest.query.comparator as string,
+          queryResourceType: proofRequest.resource.resourceType as string,
+          queryValue: proofRequest.query.value as string,
+          queryRaw: JSON.stringify(proofRequest.query) as string,
+          publicKey: publicKey.toBase58().toString(),
+        },
+      });
       workflowIds.push(workflowId);
     }
 
@@ -106,29 +116,9 @@ export class ProofsResolver {
         status,
         resourceId,
       );
-
       const workflowData = { resourceId, publicKey, workflows };
       selectedWorkflows.push(workflowData);
     }
-
-    // const workflowIds: string[] = [];
-    // selectedWorkflows.provingWorkflowStatus.forEach((workflow) => {
-    //   //@ts-ignore
-    //   console.log(workflow.executions[0].status);
-    //   //@ts-ignore
-    //   if (
-    //     //@ts-ignore
-    //     workflow.executions[0].status === 'WORKFLOW_EXECUTION_STATUS_COMPLETED'
-    //   ) {
-    //     //@ts-ignore
-    //     workflowIds.push(
-    //       //@ts-ignore
-    //       workflow.executions[0].execution.workflowId as string,
-    //     );
-    //   }
-    // });
-
-    const completedWorkflowsIds = selectedWorkflows.map((workflow) => {});
 
     return selectedWorkflows;
   }

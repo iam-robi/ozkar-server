@@ -111,17 +111,18 @@ enum PostOrderField {
 }
 
 type Proof {
-  content: String
-
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
   id: ID!
-  published: Boolean!
-  title: String!
+  publicKey: String
+  queryComparator: String
+  queryRaw: String
+  queryResourceType: String
+  queryValue: String
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: DateTime!
-  user: User
+  workflowId: String
 }
 
 type Query {

@@ -35,6 +35,18 @@ model Post {
   authorId  String?
 }
 
+model Proof {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  workflowId        String
+  queryComparator   String
+  queryValue        String
+  queryResourceType String
+  queryRaw          String
+  publicKey         String
+}
+
 enum Role {
   ADMIN
   USER

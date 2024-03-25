@@ -3,4 +3,4 @@ import PaginatedResponse from '../../common/pagination/pagination';
 import { Proof } from './proof.model';
 
 @ObjectType()
-export class PostConnection extends PaginatedResponse(Proof) {}
+export class ProofConnection extends PaginatedResponse(Proof) {}

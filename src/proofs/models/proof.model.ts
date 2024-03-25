@@ -1,18 +1,23 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../users/models/user.model';
 import { BaseModel } from '../../common/models/base.model';
 
 @ObjectType()
 export class Proof extends BaseModel {
-  @Field()
-  title: string;
+  @Field(() => String, { nullable: true })
+  workflowId: string;
 
   @Field(() => String, { nullable: true })
-  content?: string | null;
+  queryComparator: string | null;
 
-  @Field(() => Boolean)
-  published: boolean;
+  @Field(() => String, { nullable: true })
+  queryResourceType: string;
 
-  @Field(() => User, { nullable: true })
-  user?: User | null;
+  @Field(() => String, { nullable: true })
+  queryValue: string;
+
+  @Field(() => String, { nullable: true })
+  queryRaw: string;
+
+  @Field(() => String, { nullable: true })
+  publicKey: string;
 }

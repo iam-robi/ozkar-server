@@ -25,6 +25,18 @@ Table Post {
   authorId String
 }
 
+Table Proof {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  workflowId String [not null]
+  queryComparator String [not null]
+  queryValue String [not null]
+  queryResourceType String [not null]
+  queryRaw String [not null]
+  publicKey String [not null]
+}
+
 Enum Role {
   ADMIN
   USER

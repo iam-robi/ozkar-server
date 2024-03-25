@@ -190,7 +190,7 @@ export class ProofService {
         if (payload.metadata && payload.data) {
           try {
             // Convert the Buffer to a string; assuming the encoding is 'json/plain' or similar and content is JSON
-            const dataStr = payload.data.toString('utf8'); // Convert Buffer to string
+            const dataStr = payload.data.toString(); // Convert Buffer to string
             clearAttributes[key] = JSON.parse(dataStr);
           } catch (error) {
             console.error(
