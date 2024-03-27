@@ -108,27 +108,11 @@ export class ProofService {
       const workflowId = executionInfo.execution.workflowId;
       const runId = executionInfo.execution.runId;
 
-      // Check if the execution status indicates that the workflow has completed
-      // see WorkflowExecutionStatusName for status mapping. 2 == completed
-      // if (executionInfo.status === 2) {
-      //   // Adjust status check as needed
-      //   const client = new WorkflowClient({
-      //     connection: connection, // or however you instantiate your connection
-      //     namespace: this.config.get<string>('temporal.namespace'),
-      //   });
+      const queryMetadata = await this.prisma.proof.findFirst({
+        where: { workflowId: workflowId, publicKey: publicKey },
+      });
 
-      //   const handle = client.getHandle(workflowId, runId);
-      //   try {
-      //     const result = await handle.result();
-      //     results.push({
-      //       workflowId: workflowId,
-      //       runId: runId,
-      //       result: result,
-      //     });
-      //   } catch (error) {
-      //     console.error('Failed to fetch result for', workflowId, runId, error);
-      //   }
-      // }
+      console.log('queryMetadata', queryMetadata);
 
       if (executionInfo.status === 2) {
         // Completed workflows
@@ -141,6 +125,7 @@ export class ProofService {
             status: 'COMPLETED',
             executionInfo: executionInfo,
             result: result,
+            queryMetadata,
           });
         } catch (error) {
           console.error('Failed to fetch result for', workflowId, runId, error);
@@ -154,11 +139,10 @@ export class ProofService {
           status: 'RUNNING',
           executionInfo: executionInfo,
           result: null, // Indicate no result for running workflows
+          queryMetadata,
         });
       }
     }
-
-    console.log('Results:', results);
 
     return results; // Make sure to return the response
   }

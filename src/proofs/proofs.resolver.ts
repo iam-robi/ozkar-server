@@ -18,7 +18,9 @@ import 'crypto';
 import { Client } from 'mina-signer';
 import { PublicKey } from 'o1js';
 import { hash } from 'bcrypt';
-import { sign } from 'crypto';
+import { randomUUID, sign } from 'crypto';
+import { UUID } from 'graphql-scalars/typings/mocks.js';
+import { random } from 'nanoid';
 @Resolver(() => Proof)
 export class ProofsResolver {
   constructor(
@@ -73,16 +75,36 @@ export class ProofsResolver {
         publicKey,
         proofRequest.resource.id,
       );
-      const newProofMetadata = this.prisma.proof.create({
+      // console.log(proofRequest.query);
+
+      console.log(proofRequest.query['/resourceType']['$eq']);
+      //TODO: also index coding metadata
+      // const system = proofRequest.query["/code/coding/'0/system"]['$eq'];
+      // const systemCode = proofRequest.query["/code/coding/'0/code"]['$eq'];
+      // const unit = proofRequest.query["/valueQuantity/'0/unit"]['$eq'];
+
+      const resourceType = proofRequest.query['/resourceType']['$eq'];
+
+      //TODO: add support for string values
+      const queryValueComparator = Object.keys(
+        proofRequest.query['/valueQuantity/value'],
+      )[0];
+      const queryValue = String(
+        proofRequest.query['/valueQuantity/value'][queryValueComparator],
+      );
+
+      //T
+      await this.prisma.proof.create({
         data: {
-          workflowId: workflowId as string,
-          queryComparator: proofRequest.query.comparator as string,
-          queryResourceType: proofRequest.resource.resourceType as string,
-          queryValue: proofRequest.query.value as string,
+          workflowId: workflowId,
+          queryComparator: queryValueComparator,
+          queryResourceType: resourceType as string,
+          queryValue: queryValue,
           queryRaw: JSON.stringify(proofRequest.query) as string,
           publicKey: publicKey.toBase58().toString(),
         },
       });
+
       workflowIds.push(workflowId);
     }
 
